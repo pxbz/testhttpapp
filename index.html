@@ -1,10 +1,12 @@
 <head>
   <script>
-    function doPost() {
-      
+    let clickCounter = 0;
+    document.getElementById("test").onclick = aaa;
+    function aaa() {
+      document.getElementById("test").value = `Click counter ${++clickCounter}`;
     }
   </script>
 </head>
 <body>
-  Hello! Test
+  <button id="test">Click counter: 0</button>
 </body>
