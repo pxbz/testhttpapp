@@ -2,9 +2,9 @@
   <button id="test">Click counter: 0</button>
   <script>
     let clickCounter = 0;
+    document.getElementById("test").setAttribute('onclick', 'aaa()')
     function aaa() {
       document.getElementById("test").innerHTML = `Click counter: ${++clickCounter}`;
     }
-    document.getElementById("test").onClick = aaa;
   </script>
 </body>
