@@ -30,7 +30,7 @@ function searchEstimateXML(toSearch, xmlPath) {
 function searchXML(toSearch, xmlPath) {
   let xmlPathArr = xmlPath.split("/")
   if (xmlPathArr.length == 1) {
-    return toSearch[xmlPathArr];
+    return toSearch[xmlPathArr][0];
   }
   else {
     let firstElement = xmlPathArr.shift()
