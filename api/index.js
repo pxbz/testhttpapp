@@ -7,7 +7,7 @@ const app = require('express')();
 // })
 
 app.post('/api', (req, res) => {
-  res.send({test:"weeee", request: req});
+  res.send({test:"weeee", request: req.body});
 });
 
 app.get('/api/item/:slug', (req, res) => {
