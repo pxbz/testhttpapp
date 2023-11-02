@@ -12,7 +12,7 @@ app.use(xmlparser())
 
 app.post('/api/ccc', (req, res) => {
   let { infoa } = req.body.openinga;
-  res.send({"type":typeof(infoa), "infoa":infoa, request: req.body});
+  res.send({"type":typeof(infoa[0]), "infoa":infoa, request: req.body});
 });
 
 app.post('/api', (req, res) => {
