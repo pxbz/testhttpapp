@@ -28,10 +28,7 @@ app.get('/echo', (req, res) => {
   res.send(req)
 })
 
-app.listen(
-  PORT,
-  () => console.log(`it's alive on http://localhost:${PORT}`)
-)
+app.listen()
 
 
 
