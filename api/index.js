@@ -1,7 +1,8 @@
+const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
 const app = express();
 
-app.use(express.json())
+app.use(xmlparser)
 
 // app.get('/api/ping', (req, res) => {
 //   res.setHeader('Content-Type', 'text/html');
@@ -10,16 +11,12 @@ app.use(express.json())
 // })
 
 app.post('/api/ccc', (req, res) => {
-  res.send({test:"weeee", request: req.body});
+  let { infoa } = req.body;
+  res.send({"infoa":infoa, request: req.body});
 });
 
 app.post('/api', (req, res) => {
   res.send({test:"weeee", request: req.body});
-});
-
-app.get('/api/item/:slug', (req, res) => {
-  const { slug } = req.params;
-  res.end(`Item: ${slug}`);
 });
 
 module.exports = app
