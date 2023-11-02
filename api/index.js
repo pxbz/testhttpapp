@@ -9,11 +9,7 @@ app.use(express.json())
 //   res.end({ping: "pong"});
 // })
 
-app.post('/echo', (req, res) => {
-  res.send({test:"weeee", request: req.body});
-});
-
-app.post('/api/echo', (req, res) => {
+app.post('/api/ccc', (req, res) => {
   res.send({test:"weeee", request: req.body});
 });
 
