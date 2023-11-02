@@ -17,7 +17,7 @@ app.post('/api/ccc', (req, res) => {
   let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
 
   post({"RO": roNumber, "Estimator": estimatorName})
-  res.send({"type":"a"});
+  res.send({"RO": roNumber, "Estimator": estimatorName});
 });
 
 app.post('/api', (req, res) => {
