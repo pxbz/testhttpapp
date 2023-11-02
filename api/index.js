@@ -21,8 +21,9 @@ app.post('/api/ccc', xmlparser({trim: false, explicitArray: false}), (req, res, 
 });
 
 app.post('/api/test', (req, res) => {
-  console.log(req.body + "111111111")
-  console.log(req.headers)
+  console.log(req + "111111111")
+  console.log(req.params)
+  res.send({"received":"yes!"})
 })
 
 app.post('/api', (req, res) => {
