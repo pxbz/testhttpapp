@@ -25,7 +25,7 @@ app.post('/api', (req, res) => {
 });
 
 function searchEstimateXML(toSearch, xmlPath) {
-  return searchXML(toSearch, "VehicleDamageEstimateAddRq" + xmlPath)
+  return searchXML(toSearch, ("VehicleDamageEstimateAddRq" + xmlPath).toLowerCase())
 }
 
 function searchXML(toSearch, xmlPath) {
