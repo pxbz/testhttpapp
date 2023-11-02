@@ -3,7 +3,7 @@ const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
 const app = express();
 
-app.use(xmlparser({explicitArray:false}))
+// app.use(xmlparser({explicitArray:false}))
 
 // app.get('/api/ping', (req, res) => {
 //   res.setHeader('Content-Type', 'text/html');
@@ -11,7 +11,7 @@ app.use(xmlparser({explicitArray:false}))
 //   res.end({ping: "pong"});
 // })
 
-app.post('/api/ccc', (req, res) => {
+app.post('/api/ccc', xmlparser({trim: false, explicitArray: false}), (req, res, next) => {
   console.log(req.body)
   let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID");
   let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
@@ -19,6 +19,11 @@ app.post('/api/ccc', (req, res) => {
   post({"RO": roNumber, "Estimator": estimatorName})
   res.send({"RO": roNumber, "Estimator": estimatorName});
 });
+
+app.post('/api/test', (req, res) => {
+  console.log(req.body + "111111111")
+  console.log(req.headers)
+})
 
 app.post('/api', (req, res) => {
   res.send({test:"weeee", request: req.body});
@@ -35,8 +40,6 @@ function searchXML(toSearch, xmlPath) {
   }
   else {
     let firstElement = xmlPathArr.shift()
-    console.log(toSearch)
-    console.log(firstElement)
     return searchXML(toSearch[firstElement], xmlPathArr.join("/"))
   }
 }
@@ -52,7 +55,7 @@ function post(postData){
       }
   }
   request(clientServerOptions, function (error, response) {
-      console.log(error,response.body);
+      // console.log(error,response.body);
       return;
   });
 }
