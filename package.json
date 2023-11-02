@@ -19,6 +19,7 @@
   "homepage": "https://github.com/pxbz/testhttpapp#readme",
   "dependencies": {
     "express": "^4.18.2",
-    "express-xml-bodyparser": "^0.3.0"
+    "express-xml-bodyparser": "^0.3.0",
+    "request": "^2.88.2"
   }
 }

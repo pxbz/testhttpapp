@@ -1,3 +1,4 @@
+const request = require('request')
 const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
 const app = express();
@@ -11,12 +12,46 @@ app.use(xmlparser())
 // })
 
 app.post('/api/ccc', (req, res) => {
-  let { infoa } = req.body.openinga;
-  res.send({"type":typeof(infoa[0]), "infoa":infoa, request: req.body});
+  let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID");
+  let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
+
+  postData({"RO": roNumber, "Estimator": estimatorName})
+  res.send({"type":"a"});
 });
 
 app.post('/api', (req, res) => {
   res.send({test:"weeee", request: req.body});
 });
+
+function searchEstimateXML(toSearch, xmlPath) {
+  return searchXML(toSearch, "VehicleDamageEstimateAddRq" + xmlPath)
+}
+
+function searchXML(toSearch, xmlPath) {
+  let xmlPathArr = xmlPath.split("/")
+  if (xmlPathArr.length == 1) {
+    return toSearch[xmlPathArr];
+  }
+  else {
+    let firstElement = xmlPathArr.shift()
+    return searchXML(toSearch[firstElement], xmlPathArr.join("/"))
+  }
+}
+
+
+function post(postData){
+  var clientServerOptions = {
+      uri: 'http://https://eo7q6qtuaqkwpto.m.pipedream.net',
+      body: JSON.stringify(postData),
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      }
+  }
+  request(clientServerOptions, function (error, response) {
+      console.log(error,response.body);
+      return;
+  });
+}
 
 module.exports = app
