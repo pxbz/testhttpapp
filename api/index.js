@@ -12,6 +12,7 @@ app.use(xmlparser())
 // })
 
 app.post('/api/ccc', (req, res) => {
+  console.log(req.body)
   let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID");
   let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
 
