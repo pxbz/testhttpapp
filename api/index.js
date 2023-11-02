@@ -3,7 +3,7 @@ const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
 const app = express();
 
-app.use(xmlparser())
+app.use(xmlparser({explicitArray:false}))
 
 // app.get('/api/ping', (req, res) => {
 //   res.setHeader('Content-Type', 'text/html');
@@ -58,3 +58,23 @@ function post(postData){
 }
 
 module.exports = app
+
+//  <VehicleDamageEstimateAddRq>
+//    <DocumentInfo>
+//      <ReferenceInfo>
+//        <RepairOrderID>3040</RepairOrderID>
+//      </ReferenceInfo>
+//    </DocumentInfo>
+//    <AdminInfo>
+//      <Estimator>
+//        <Party>
+//          <PersonInfo>
+//            <PersonName>
+//              <FirstName>John</FirstName>
+//              <LastName>Ellis</LastName>
+//            </PersonName>
+//          </PersonInfo>
+//        </Party>
+//      </Estimator>
+//    </AdminInfo>
+//  </VehicleDamageEstimateAddRq>
