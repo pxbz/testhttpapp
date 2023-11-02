@@ -11,8 +11,8 @@ app.use(xmlparser)
 // })
 
 app.post('/api/ccc', (req, res) => {
-  let { infoa } = req.body;
-  res.send({"infoa":infoa, request: req.body});
+  //let { infoa } = req.body;
+  res.send({"infoa":"t", request: req.body});
 });
 
 app.post('/api', (req, res) => {
