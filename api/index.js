@@ -31,15 +31,12 @@ function searchEstimateXML(toSearch, xmlPath) {
 function searchXML(toSearch, xmlPath) {
   let xmlPathArr = xmlPath.split("/")
   if (xmlPathArr.length == 1) {
-    console.log(toSearch)
-    console.log(xmlPathArr)
-    console.log(xmlPathArr[0])
-    console.log(toSearch[xmlPathArr[0]])
-    console.log(toSearch[xmlPathArr[0]][0])
     return toSearch[xmlPathArr[0]][0];
   }
   else {
     let firstElement = xmlPathArr.shift()
+    console.log(toSearch)
+    console.log(firstElement)
     return searchXML(toSearch[firstElement], xmlPathArr.join("/"))
   }
 }
