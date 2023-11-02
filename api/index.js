@@ -44,7 +44,7 @@ function searchXML(toSearch, xmlPath) {
 
 function post(postData){
   var clientServerOptions = {
-      uri: 'http://https://eo7q6qtuaqkwpto.m.pipedream.net',
+      uri: 'https://eo7q6qtuaqkwpto.m.pipedream.net',
       body: JSON.stringify(postData),
       method: 'POST',
       headers: {
