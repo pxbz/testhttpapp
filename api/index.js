@@ -27,8 +27,10 @@ app.post('/echo', (req, res) => {
   res.send(req)
 })
 
-app.get('/ping', (req, res) => {
-  res.send({ping: "pong!"})
+app.get('/api/ping', (req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
+  res.end({ping: "pong"});
 })
 
 // app.get('/api', (req, res) => {
