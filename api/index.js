@@ -6,8 +6,8 @@ const app = require('express')();
 //   res.end({ping: "pong"});
 // })
 
-app.get('/api', (req, res) => {
-  res.send({test:"weeee"});
+app.post('/api', (req, res) => {
+  res.send({test:"weeee", request: req});
 });
 
 app.get('/api/item/:slug', (req, res) => {
