@@ -2,7 +2,7 @@ const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
 const app = express();
 
-app.use(xmlparser)
+app.use(xmlparser())
 
 // app.get('/api/ping', (req, res) => {
 //   res.setHeader('Content-Type', 'text/html');
@@ -11,8 +11,8 @@ app.use(xmlparser)
 // })
 
 app.post('/api/ccc', (req, res) => {
-  //let { infoa } = req.body;
-  res.send({"infoa":"t", request: req.body});
+  let { infoa } = req.body;
+  res.send({"infoa":infoa, request: req.body});
 });
 
 app.post('/api', (req, res) => {
