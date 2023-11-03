@@ -11,7 +11,7 @@ const app = express();
 //   res.end({ping: "pong"});
 // })
 
-app.post('/api/ccc', xmlparser({trim: false, explicitArray: false}), (req, res, next) => {
+app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (req, res, next) => {
   console.log(req.body)
   let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID");
   let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
