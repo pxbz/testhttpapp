@@ -33,7 +33,7 @@ app.post('/api/test', express.json(), async (req, res) => {
   await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name)
             VALUES (${RONumber}, ${EstimatorName})
             ON CONFLICT (ro_number) DO UPDATE 
-              SET column_1 = excluded.estimator_full_name;`
+              SET estimator_full_name = excluded.estimator_full_name;`
 
   const { rows } = await sql`SELECT * from test_Estimates`
 
