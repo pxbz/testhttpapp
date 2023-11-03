@@ -20,7 +20,7 @@ app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (r
 app.post('/api/test', express.json(), async (req, res) => {
   const { RONumber, EstimatorName } = req.body
 
-  await sql`DROP TABLE testEstimates;`
+  await sql`DROP TABLE test_Estimates;`
 
   await sql`CREATE TABLE IF NOT EXISTS test_Estimates (
     ro_number INT NOT NULL,
