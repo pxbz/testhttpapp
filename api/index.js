@@ -26,8 +26,8 @@ app.post('/api/test', express.json(), async (req, res) => {
     PRIMARY KEY (ro_number)
   );`
 
-  await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name) VALUES (${RONumber}, ${EstimatorName}) AS new
-  ON DUPLICATE KEY UPDATE estimator_full_name = new.estimator_full_name;`
+  await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name) VALUES (${RONumber}, ${EstimatorName})
+  ON DUPLICATE KEY UPDATE estimator_full_name = VALUES(estimator_full_name);`
 
   const { rows } = await sql`SELECT * from test_Estimates`
 
