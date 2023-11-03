@@ -31,7 +31,7 @@ app.post('/api/test', express.json(), async (req, res) => {
   console.log(typeof(RONumber))
   console.log(EstimatorName)
   console.log(typeof(EstimatorName))
-  await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name) VALUES (` + RONumber + `, ` + EstimatorName + `)`
+  await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name) VALUES (${RONumber}, ${EstimatorName})`
 
   const { rows } = await sql`SELECT * from test_Estimates`
 
