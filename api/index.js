@@ -1,3 +1,4 @@
+import { sql } from "@vercel/postgres"
 const request = require('request')
 const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
@@ -14,9 +15,21 @@ app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (r
   res.send({"RO": roNumber, "Estimator": estimatorName});
 });
 
-app.post('/api/test', express.json(), (req, res) => {
-  const { RONumber } = req.body
-  res.send({"RONumber":RONumber})
+app.post('/api/test', express.json(), async (req, res) => {
+  const { RONumber, EstimatorName } = req.body
+
+  await sql`CREATE TABLE IF NOT EXISTS test_Estimates (
+    ro_number INT NOT NULL,
+    estimator_full_name VARCHAR(128) NOT NULL,
+    PRIMARY KEY (ro_number)
+  );`
+
+  await SQL`INSERT INTO test_Estimates (ro_number, estimator_full_name) VALUES (${RONumber}, ${EstimatorName}) AS new
+  ON DUPLICATE KEY UPDATE estimator_full_name = new.estimator_full_name`
+
+  const { rows } = await sql`SELECT * from test_Estimates`
+
+  res.send({"rows": rows})
 })
 
 app.post('/api', (req, res) => {
