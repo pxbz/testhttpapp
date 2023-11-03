@@ -1,6 +1,6 @@
-import { sql } from "@vercel/postgres"
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
+import {sql} from "@vercel/postgres"
 const request = require('request')
 const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
@@ -69,7 +69,7 @@ function post(postData){
   });
 }
 
-module.exports = app
+export default app
 
 //  <VehicleDamageEstimateAddRq>
 //    <DocumentInfo>
