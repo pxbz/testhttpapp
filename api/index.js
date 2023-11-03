@@ -1,4 +1,6 @@
-const sql = require("@vercel/postgres")
+import { sql } from "@vercel/postgres"
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
 const request = require('request')
 const xmlparser = require('express-xml-bodyparser')
 const express = require('express')
