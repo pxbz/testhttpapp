@@ -5,12 +5,6 @@ const app = express();
 
 // app.use(xmlparser({explicitArray:false}))
 
-// app.get('/api/ping', (req, res) => {
-//   res.setHeader('Content-Type', 'text/html');
-//   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
-//   res.end({ping: "pong"});
-// })
-
 app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (req, res, next) => {
   console.log(req.body)
   let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID");
@@ -20,9 +14,9 @@ app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (r
   res.send({"RO": roNumber, "Estimator": estimatorName});
 });
 
-app.post('/api/test', (req, res) => {
-  console.log(req)
-  res.send({"received":"yes!"})
+app.post('/api/test', express.json(), (req, res) => {
+  const { RONumber } = req.body
+  res.send({"RONumber":RONumber})
 })
 
 app.post('/api', (req, res) => {
