@@ -26,10 +26,6 @@ app.post('/api/test', express.json(), async (req, res) => {
     PRIMARY KEY (ro_number)
   );`
 
-  console.log(RONumber)
-  console.log(typeof(RONumber))
-  console.log(EstimatorName)
-  console.log(typeof(EstimatorName))
   await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name)
             VALUES (${RONumber}, ${EstimatorName})
             ON CONFLICT (ro_number) DO UPDATE 
