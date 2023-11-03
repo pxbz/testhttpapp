@@ -24,7 +24,8 @@ app.post('/api/test', express.json(), async (req, res) => {
 
   await sql`CREATE TABLE IF NOT EXISTS test_Estimates (
     ro_number INT NOT NULL,
-    estimator_full_name VARCHAR(128) NOT NULL
+    estimator_full_name VARCHAR(128) NOT NULL,
+    PRIMARY KEY (ro_number)
   );`
 
   console.log(RONumber)
