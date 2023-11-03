@@ -16,7 +16,7 @@ app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (r
   let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID");
   let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
 
-  post({"RO": roNumber, "Estimator": estimatorName})
+  post({"RO": roNumber, "Estimator": estimatorName, "request": req})
   res.send({"RO": roNumber, "Estimator": estimatorName});
 });
 
@@ -47,7 +47,7 @@ function searchXML(toSearch, xmlPath) {
 
 function post(postData){
   var clientServerOptions = {
-      uri: 'https://eo7q6qtuaqkwpto.m.pipedream.net',
+      uri: 'https://hooks.zapier.com/hooks/catch/16910047/38cjokf/',
       body: JSON.stringify(postData),
       method: 'POST',
       headers: {
