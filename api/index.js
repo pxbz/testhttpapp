@@ -17,8 +17,8 @@ await sql`CREATE TABLE IF NOT EXISTS test_Estimates (
 );`
 
 app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (req, res) => {
-  let roNumber = searchEstimateXML("/DocumentInfo/ReferenceInfo/RepairOrderID")
-  let estimatorName = searchEstimateXML("/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML("/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
+  let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID")
+  let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
 
   // let roNumber = req.body.vehicledamageestimateaddrq.documentinfo.referenceinfo.repairorderid
   // let estimatorName = req.body.vehicledamageestimateaddrq.admininfo.estimator.party.personinfo.personname.firstname + " " + req.body.vehicledamageestimateaddrq.admininfo.estimator.party.personinfo.personname.lastname
