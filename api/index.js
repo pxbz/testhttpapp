@@ -16,7 +16,7 @@ await sql`CREATE TABLE IF NOT EXISTS test_Estimates (
   PRIMARY KEY (ro_number)
 );`
 
-app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), async (req, res) => {
+app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (req, res) => {
   let roNumber = searchEstimateXML("/DocumentInfo/ReferenceInfo/RepairOrderID")
   let estimatorName = searchEstimateXML("/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML("/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
 
@@ -35,10 +35,10 @@ app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), as
   let carMake = req.body.vehicledamageestimateaddrq.vehicleinfo.vehicledesc.makedesc
   let carModel = req.body.vehicledamageestimateaddrq.vehicleinfo.vehicledesc.modelname + " " + req.body.vehicledamageestimateaddrq.vehicleinfo.vehicledesc.modelyear
 
-  await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name)
-  VALUES (${roNumber}, ${estimatorName})
-  ON CONFLICT (ro_number) DO UPDATE 
-    SET estimator_full_name = excluded.estimator_full_name;`
+  // await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name)
+  // VALUES (${roNumber}, ${estimatorName})
+  // ON CONFLICT (ro_number) DO UPDATE 
+  //   SET estimator_full_name = excluded.estimator_full_name;`
 
   res.send({"RO": roNumber, "Estimator": estimatorName});
 });
