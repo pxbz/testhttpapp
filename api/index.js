@@ -8,28 +8,40 @@ const app = express();
 
 // app.use(xmlparser({explicitArray:false}))
 
-app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), (req, res, next) => {
-  console.log(req.body)
-  let roNumber = searchEstimateXML(req.body, "/DocumentInfo/ReferenceInfo/RepairOrderID");
-  let estimatorName = searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/FirstName") + " " + searchEstimateXML(req.body, "/AdminInfo/Estimator/Party/PersonInfo/PersonName/LastName")
+// Create table before endpoints are set up
+await sql`CREATE TABLE IF NOT EXISTS test_Estimates (
+  ro_number INT NOT NULL,
+  estimator_full_name VARCHAR(128) NOT NULL,
+  
+  PRIMARY KEY (ro_number)
+);`
 
-  post({"RO": roNumber, "Estimator": estimatorName, "request": req})
+app.post('/api/ccc/estimate', xmlparser({trim: false, explicitArray: false}), async (req, res) => {
+  let roNumber = req.body.vehicledamageestimateaddrq.documentinfo.referenceinfo.repairorderid
+  let estimatorName = req.body.vehicledamageestimateaddrq.admininfo.estimator.party.personinfo.personname.firstname + " " + req.body.vehicledamageestimateaddrq.admininfo.estimator.party.personinfo.personname.lastname
+  
+  post({"RONumber": roNumber, "Estimator": estimatorName})
+
+  let checkedInDate = req.body.vehicledamageestimateaddrq.eventinfo.repairevent.arrivaldatetime
+  let bodyRepairsCompletionDate = req.body.vehicledamageestimateaddrq.eventinfo.repairevent.actualcompletiondatetime
+  let pickupCompletionDate = req.body.vehicledamageestimateaddrq.eventinfo.repairevent.actualpickupdatetime
+  let totalLossIndicator = req.body.vehicledamageestimateaddrq.claiminfo.lossinfo.totallossind
+  let carColor = req.body.vehicledamageestimateaddrq.vehicleinfo.paint.exterior.color.colorname
+  let carMake = req.body.vehicledamageestimateaddrq.vehicleinfo.vehicledesc.makedesc
+  let carModel = req.body.vehicledamageestimateaddrq.vehicleinfo.vehicledesc.modelname + " " + req.body.vehicledamageestimateaddrq.vehicleinfo.vehicledesc.modelyear
+
+  await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name)
+  VALUES (${roNumber}, ${estimatorName})
+  ON CONFLICT (ro_number) DO UPDATE 
+    SET estimator_full_name = excluded.estimator_full_name;`
+
   res.send({"RO": roNumber, "Estimator": estimatorName});
 });
 
 app.post('/api/test', express.json(), async (req, res) => {
   const { RONumber, EstimatorName } = req.body
 
-  await sql`CREATE TABLE IF NOT EXISTS test_Estimates (
-    ro_number INT NOT NULL,
-    estimator_full_name VARCHAR(128) NOT NULL,
-    PRIMARY KEY (ro_number)
-  );`
-
-  await sql`INSERT INTO test_Estimates (ro_number, estimator_full_name)
-            VALUES (${RONumber}, ${EstimatorName})
-            ON CONFLICT (ro_number) DO UPDATE 
-              SET estimator_full_name = excluded.estimator_full_name;`
+  
 
   const { rows } = await sql`SELECT * from test_Estimates`
 
